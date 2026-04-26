@@ -1,0 +1,6 @@
+# MLflow runtime directories (generated when docker-compose up)
+mlruns/
+mlartifacts/
+
+# Jupyter checkpoints
+.ipynb_checkpoints/

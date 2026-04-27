@@ -1,5 +1,6 @@
 # MLflow runtime directories (generated when docker-compose up)
-mlruns/
+mlruns/.trash/
+mlruns/models/
 mlartifacts/
 
 # Jupyter checkpoints

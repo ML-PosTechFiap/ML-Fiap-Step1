@@ -45,14 +45,14 @@ Tech_Challenge/
 ├── .python-version                      # Versão do Python (3.12)
 ├── data/
 │   └── Telco-Customer-Churn.csv         # Dataset (deve estar presente)
-└── etapa1/
+└── step1/
     ├── docs/
     │   └── ML_CANVAS.md                 # ML Canvas — formulação do problema
     ├── notebooks/
     │   ├── 01_eda_analysis.ipynb        # EDA completa
     │   └── 02_baselines.ipynb           # Baselines + MLflow tracking
     ├── docker-compose.yml               # Servidor MLflow em container
-    ├── run_etapa1.py                    # Orquestrador (sobe MLflow + executa notebooks)
+    ├── run_step1.py                    # Orquestrador (sobe MLflow + executa notebooks)
     ├── run.bat                          # Wrapper para Windows
     ├── .gitignore
     └── README.md                        # Este arquivo
@@ -61,7 +61,7 @@ Tech_Challenge/
 Ao executar, o script gera automaticamente:
 
 ```
-etapa1/
+step1/
 ├── mlruns/        # Backend store do MLflow (volumes Docker)
 └── mlartifacts/   # Artefatos: modelos pickle, plots PNG, etc.
 ```
@@ -92,9 +92,9 @@ curl -LsSf https://astral.sh/uv/install.sh | sh
 
 > ⚠️ Em **Windows**, abra o **Docker Desktop** e aguarde-o ficar com status _"Running"_ antes de executar o script.
 
-**Dataset**: o arquivo `Telco-Customer-Churn.csv` precisa estar em `../data/` (pasta `data/` na raiz do projeto, irmã de `etapa1/`). Ele já está incluído no repositório.
+**Dataset**: o arquivo `Telco-Customer-Churn.csv` precisa estar em `../data/` (pasta `data/` na raiz do projeto, irmã de `step1/`). Ele já está incluído no repositório.
 
-**Dependências**: definidas no [`pyproject.toml`](../pyproject.toml) na **raiz do projeto** (não em `etapa1/`). O `uv` cria um `.venv` automaticamente na primeira execução.
+**Dependências**: definidas no [`pyproject.toml`](../pyproject.toml) na **raiz do projeto** (não em `step1/`). O `uv` cria um `.venv` automaticamente na primeira execução.
 
 ---
 
@@ -105,15 +105,15 @@ A forma recomendada é executar o orquestrador, que cuida de **tudo** automatica
 ### Windows (CMD ou PowerShell)
 
 ```cmd
-cd etapa1
+cd step1
 run.bat
 ```
 
 ### Linux / macOS / Git Bash
 
 ```bash
-cd etapa1
-uv run python run_etapa1.py
+cd step1
+uv run python run_step1.py
 ```
 
 ### O que o script faz, em ordem
@@ -134,7 +134,7 @@ Após a conclusão, basta abrir [http://localhost:5000](http://localhost:5000) n
 ### Flags disponíveis
 
 ```bash
-uv run python run_etapa1.py --help
+uv run python run_step1.py --help
 ```
 
 | Flag | Quando usar |
@@ -148,13 +148,13 @@ Exemplos:
 
 ```bash
 # Re-executar apenas os notebooks (MLflow e venv já prontos)
-uv run python run_etapa1.py --skip-deps --skip-docker
+uv run python run_step1.py --skip-deps --skip-docker
 
 # Subir só a infra para depois trabalhar interativamente no Jupyter
-uv run python run_etapa1.py --skip-notebooks
+uv run python run_step1.py --skip-notebooks
 
 # Pipeline completo + cleanup ao final
-uv run python run_etapa1.py --shutdown
+uv run python run_step1.py --shutdown
 ```
 
 ---
@@ -176,7 +176,7 @@ Isso cria `.venv/` e instala tudo que está em `pyproject.toml` + `uv.lock`.
 ### 2. Subir o MLflow
 
 ```bash
-cd etapa1
+cd step1
 docker compose up -d mlflow
 ```
 
@@ -282,13 +282,13 @@ Single source of truth das dependências, gerenciado pelo `uv`:
 - `pandas`, `numpy`, `scikit-learn`, `matplotlib`, `seaborn`, `mlflow`, `jupyter`, `ipykernel`, `scipy`
 - + bibliotecas para etapas futuras: `fastapi`, `pydantic`, `pytorch` (a adicionar), `lightgbm`, `xgboost`, `evidently`, `fairlearn`, `slowapi`
 
-### `run_etapa1.py`
+### `run_step1.py`
 
 Orquestrador Python (cross-platform) que executa todo o pipeline da Etapa 1 sem intervenção manual. Usa apenas a stdlib (`subprocess`, `urllib`, `argparse`, `logging`) e delega gerenciamento de ambiente para o `uv`.
 
 ### `run.bat`
 
-Wrapper conveniente para Windows: detecta o `uv` no PATH, muda para o diretório correto e repassa todos os argumentos para `run_etapa1.py` via `uv run python`.
+Wrapper conveniente para Windows: detecta o `uv` no PATH, muda para o diretório correto e repassa todos os argumentos para `run_step1.py` via `uv run python`.
 
 ---
 
@@ -320,7 +320,7 @@ Cada run contém:
 ### Pastas geradas
 
 ```
-etapa1/
+step1/
 ├── mlruns/         # criada pelo MLflow (gitignored)
 └── mlartifacts/    # criada pelo MLflow (gitignored)
 ```
@@ -345,7 +345,7 @@ Instale o **Docker Desktop** (Windows/macOS) ou Docker Engine + Compose v2 (Linu
 
 ### `Dataset não encontrado em ../data/Telco-Customer-Churn.csv`
 
-O dataset deve estar em `Tech_Challenge/data/Telco-Customer-Churn.csv` (já incluído no repositório). Confirme que executou o script de dentro da pasta `etapa1/`.
+O dataset deve estar em `Tech_Challenge/data/Telco-Customer-Churn.csv` (já incluído no repositório). Confirme que executou o script de dentro da pasta `step1/`.
 
 ### Notebooks falham ao executar (`ModuleNotFoundError`)
 
@@ -357,7 +357,7 @@ Rode `uv sync` na raiz do projeto, ou execute o orquestrador sem `--skip-deps`.
 docker compose down
 rm -rf mlruns mlartifacts          # Linux/Mac
 rmdir /s /q mlruns mlartifacts     # Windows
-uv run python run_etapa1.py
+uv run python run_step1.py
 ```
 
 ### Porta 5000 já está em uso

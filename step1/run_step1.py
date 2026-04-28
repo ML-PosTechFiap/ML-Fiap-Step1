@@ -8,11 +8,11 @@ Executa, em sequência:
   5. Execução dos notebooks (EDA + Baselines) com nbconvert dentro do venv do uv
 
 Uso:
-    python run_etapa1.py                     # roda tudo
-    python run_etapa1.py --skip-deps         # pula uv sync
-    python run_etapa1.py --skip-docker       # assume MLflow já rodando
-    python run_etapa1.py --skip-notebooks    # apenas sobe a infra
-    python run_etapa1.py --shutdown          # derruba os containers ao final
+    python run_step1.py                     # roda tudo
+    python run_step1.py --skip-deps         # pula uv sync
+    python run_step1.py --skip-docker       # assume MLflow já rodando
+    python run_step1.py --skip-notebooks    # apenas sobe a infra
+    python run_step1.py --shutdown          # derruba os containers ao final
 """
 
 from __future__ import annotations
@@ -54,7 +54,7 @@ logging.basicConfig(
     format="%(asctime)s [%(levelname)s] %(message)s",
     datefmt="%H:%M:%S",
 )
-log = logging.getLogger("etapa1")
+log = logging.getLogger("step1")
 
 
 class StepFailed(RuntimeError):
@@ -114,7 +114,7 @@ def ensure_pyproject() -> None:
     if not PYPROJECT.exists():
         raise StepFailed(
             f"pyproject.toml não encontrado em {PYPROJECT}.\n"
-            "Esperado na raiz do projeto (uma pasta acima de etapa1/)."
+            "Esperado na raiz do projeto (uma pasta acima de step1/)."
         )
 
 
@@ -245,8 +245,8 @@ def main() -> int:
     log.info("=" * 60)
     log.info("✓ Etapa 1 concluída com sucesso.")
     log.info("MLflow UI:    %s", MLFLOW_URL)
-    log.info("Notebooks:    etapa1/notebooks/01_eda_analysis.ipynb")
-    log.info("              etapa1/notebooks/02_baselines.ipynb")
+    log.info("Notebooks:    step1/notebooks/01_eda_analysis.ipynb")
+    log.info("              step1/notebooks/02_baselines.ipynb")
     log.info("Experimento:  TelcoChurn_Step1_Baselines")
     log.info("=" * 60)
 

@@ -1,5 +1,5 @@
 [project]
-name = "showwithpandas"
+name = "ml"
 version = "0.1.0"
 description = "Pandas class to manipulate dataframes"
 readme = "README.md"

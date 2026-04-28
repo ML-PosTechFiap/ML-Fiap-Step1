@@ -1,6 +1,6 @@
 @echo off
 REM Wrapper para Windows - executa o orquestrador da Etapa 1.
-REM Repassa quaisquer argumentos para run_etapa1.py via uv.
+REM Repassa quaisquer argumentos para run_step1.py via uv.
 
 setlocal
 cd /d "%~dp0"
@@ -12,5 +12,5 @@ if errorlevel 1 (
     exit /b 1
 )
 
-uv run python run_etapa1.py %*
+uv run python run_step1.py %*
 exit /b %errorlevel%

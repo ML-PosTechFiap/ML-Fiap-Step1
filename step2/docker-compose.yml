@@ -1,0 +1,37 @@
+services:
+  mlflow:
+    build: .
+    container_name: step2_mlflow
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./mlruns:/app/mlruns:rw
+      - ./mlartifacts:/app/mlartifacts:rw
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:5000/health')"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 30s
+    environment:
+      - MLFLOW_HTTP_REQUEST_ALLOW_ALL_HOSTS=true
+    command: mlflow server --host 0.0.0.0 --port 5000 --workers 1 --allowed-hosts "*"
+
+  trainer:
+    build: .
+    container_name: step2_trainer
+    volumes:
+      - ./src:/app/src
+      - ./mlruns:/app/mlruns:rw
+      - ./mlartifacts:/app/mlartifacts:rw
+      - ../data:/app/data:ro
+    environment:
+      - ML_FLOW_API=http://mlflow:5000
+      - DATA_PATH=/app/data/Telco-Customer-Churn.csv
+    depends_on:
+      mlflow:
+        condition: service_healthy
+    command: >
+      bash -c "
+        PYTHONPATH=/app/src python /app/src/main.py
+      "

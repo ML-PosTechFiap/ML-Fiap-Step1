@@ -1,7 +1,7 @@
 services:
   mlflow:
     image: python:3.12-slim
-    container_name: etapa1_mlflow
+    container_name: step1_mlflow
     working_dir: /mlflow
     ports:
       - "5000:5000"

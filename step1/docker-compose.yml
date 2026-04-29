@@ -8,16 +8,6 @@ services:
     volumes:
       - ./mlruns:/mlflow/mlruns
       - ./mlartifacts:/mlflow/mlartifacts
-    # MLflow 3.10.1 tem dois problemas conhecidos:
-    #  1. O wrapper `mlflow server --host 0.0.0.0` invoca internamente
-    #     `uvicorn --host 127.0.0.1` ignorando a flag externa. Workaround:
-    #     forçar via `--uvicorn-opts "--host 0.0.0.0"` (último --host vence).
-    #  2. Por padrão usa `--workers 4`; no Docker Desktop isso é fonte de
-    #     instabilidade na primeira inicialização. Forçamos `--workers 1`.
-    # Também usamos `--allowed-hosts "*"` para desabilitar a proteção DNS
-    # rebinding (apropriado em dev local).
-    # NOTA: usamos formato array (lista YAML) porque `command: >` quebrava
-    # os argumentos em múltiplos params separados ao bash -c.
     command:
       - bash
       - -c

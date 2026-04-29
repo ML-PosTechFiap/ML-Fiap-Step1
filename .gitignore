@@ -1,3 +1,5 @@
 .skills/
-messy_code/
-step3/
+.claude/
+
+.venv
+.env

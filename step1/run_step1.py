@@ -27,7 +27,6 @@ import urllib.error
 import urllib.request
 from pathlib import Path
 
-# Garante UTF-8 no console (especialmente no Windows com cp1252).
 if sys.platform == "win32":
     for stream in (sys.stdout, sys.stderr):
         if hasattr(stream, "reconfigure"):
@@ -45,7 +44,6 @@ NOTEBOOKS = [
     ROOT / "notebooks" / "02_baselines.ipynb",
 ]
 MLFLOW_URL = "http://localhost:5000"
-# 600s para acomodar a primeira execução (pip install dentro do container ~ 2-3min).
 MLFLOW_HEALTH_TIMEOUT = 600
 NB_EXEC_TIMEOUT = 900
 
@@ -151,7 +149,6 @@ def wait_mlflow(timeout: int = MLFLOW_HEALTH_TIMEOUT) -> None:
                 last_error = f"HTTP {resp.status}"
         except urllib.error.HTTPError as exc:
             if exc.code == 404:
-                # MLflow respondeu, mas /health não está habilitado em algumas versões.
                 log.info("MLflow respondendo em %s (sem endpoint /health).", MLFLOW_URL)
                 return
             last_error = f"HTTPError {exc.code}"
@@ -159,7 +156,6 @@ def wait_mlflow(timeout: int = MLFLOW_HEALTH_TIMEOUT) -> None:
             last_error = f"URLError ({exc.reason})"
         except OSError as exc:
             last_error = f"{type(exc).__name__} ({exc})"
-        # Logs intermediários a cada ~30s para o usuário saber que ainda estamos esperando.
         if attempt % 10 == 0:
             log.info("... ainda aguardando MLflow (último erro: %s)", last_error)
         time.sleep(3)

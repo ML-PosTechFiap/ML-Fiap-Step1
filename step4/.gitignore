@@ -1,0 +1,54 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.Python
+.venv/
+venv/
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# ML artefacts
+mlruns/
+mlartifacts/
+models/*.pkl
+models/*.pt
+models/*.joblib
+src/models/*.pkl
+src/models/*.pt
+
+# Data
+data/output/
+*.csv
+!data/*.csv
+
+# Logs
+logs/
+*.log
+
+# Env
+.env
+!.env.example
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Generated plots
+src/graphs/*.png
+src/graphs/*.jpg
+src/graphs/*.svg
+
+# IDE
+.idea/
+.vscode/
+*.swp
+
+.pytest_cache/
+.ruff_cache/

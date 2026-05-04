@@ -1,0 +1,91 @@
+services:
+  mlflow:
+    build: .
+    container_name: step4_mlflow
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./mlruns:/app/mlruns:rw
+      - ./mlartifacts:/app/mlartifacts:rw
+    environment:
+      - MLFLOW_SERVER_ALLOWED_HOSTS=mlflow:*,step4_mlflow:*,localhost:*,127.0.0.1:*
+      - MLFLOW_HTTP_REQUEST_ALLOW_ALL_HOSTS=true
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:5000/health')"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 30s
+    command: mlflow server --host 0.0.0.0 --port 5000 --workers 1 --allowed-hosts "*"
+
+  trainer:
+    build: .
+    container_name: step4_trainer
+    volumes:
+      - ./src:/app/src
+      - ./mlruns:/app/mlruns:rw
+      - ./mlartifacts:/app/mlartifacts:rw
+      - ../data:/app/data:ro
+      - models_data:/models
+    environment:
+      - ML_FLOW_API=http://mlflow:5000
+      - DATA_PATH=/app/data/Telco-Customer-Churn.csv
+      - MODELS_PATH=/models
+    depends_on:
+      mlflow:
+        condition: service_healthy
+    command: >
+      bash -c "
+        echo 'MLflow healthy — starting full training pipeline...' &&
+        mkdir -p /models &&
+        PYTHONPATH=/app/src python /app/src/main.py
+      "
+
+  api:
+    build: .
+    container_name: step4_api
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./src:/app/src
+      - models_data:/models
+    environment:
+      - ENVIRONMENT=development
+      - ML_FLOW_API=http://mlflow:5000
+      - MODELS_PATH=/models
+    depends_on:
+      mlflow:
+        condition: service_healthy
+    command: uvicorn api.main:app --host 0.0.0.0 --port 8000 --reload
+
+  prometheus:
+    image: prom/prometheus:v2.53.0
+    container_name: step4_prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    depends_on:
+      - api
+    restart: unless-stopped
+
+  grafana:
+    image: grafana/grafana:11.1.0
+    container_name: step4_grafana
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_USERS_ALLOW_SIGN_UP=false
+    volumes:
+      - ./monitoring/grafana/provisioning:/etc/grafana/provisioning:ro
+      - ./monitoring/grafana/dashboards:/var/lib/grafana/dashboards:ro
+      - grafana_data:/var/lib/grafana
+    depends_on:
+      - prometheus
+    restart: unless-stopped
+
+volumes:
+  grafana_data:
+  models_data:

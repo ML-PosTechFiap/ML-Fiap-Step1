@@ -1,0 +1,220 @@
+{
+  "title": "Churn API — Step 4",
+  "uid": "churn-api-step4",
+  "schemaVersion": 39,
+  "version": 2,
+  "refresh": "15s",
+  "time": { "from": "now-1h", "to": "now" },
+  "panels": [
+    {
+      "id": 1,
+      "title": "Request Rate (req/s)",
+      "type": "timeseries",
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 0 },
+      "targets": [
+        {
+          "expr": "rate(http_requests_total{job=\"churn-api\"}[1m])",
+          "legendFormat": "{{method}} {{handler}} {{status_code}}"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "P95 Latency (s)",
+      "type": "timeseries",
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 0 },
+      "targets": [
+        {
+          "expr": "histogram_quantile(0.95, rate(http_request_duration_seconds_bucket{job=\"churn-api\"}[1m]))",
+          "legendFormat": "p95 {{handler}}"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "title": "Error Rate (%)",
+      "type": "timeseries",
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 8 },
+      "targets": [
+        {
+          "expr": "rate(http_requests_total{job=\"churn-api\",status_code=~\"5..\"}[1m]) / rate(http_requests_total{job=\"churn-api\"}[1m]) * 100",
+          "legendFormat": "5xx error rate %"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "title": "Predictions (total)",
+      "type": "stat",
+      "gridPos": { "h": 8, "w": 6, "x": 12, "y": 8 },
+      "targets": [
+        {
+          "expr": "sum(http_requests_total{job=\"churn-api\",handler=\"/predict\",status_code=\"200\"})",
+          "legendFormat": "Predictions"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "title": "API Uptime",
+      "type": "stat",
+      "gridPos": { "h": 8, "w": 6, "x": 18, "y": 8 },
+      "targets": [
+        {
+          "expr": "up{job=\"churn-api\"}",
+          "legendFormat": "UP"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [
+            { "options": { "0": { "text": "DOWN" }, "1": { "text": "UP" } }, "type": "value" }
+          ],
+          "thresholds": {
+            "steps": [
+              { "color": "red", "value": 0 },
+              { "color": "green", "value": 1 }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": 6,
+      "title": "Request Duration Heatmap",
+      "type": "heatmap",
+      "gridPos": { "h": 8, "w": 24, "x": 0, "y": 16 },
+      "targets": [
+        {
+          "expr": "sum(rate(http_request_duration_seconds_bucket{job=\"churn-api\",handler=\"/predict\"}[1m])) by (le)",
+          "legendFormat": "{{le}}"
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "title": "Drift Detected",
+      "type": "stat",
+      "description": "1 = drift detected in production data vs. training distribution. Retrain recommended.",
+      "gridPos": { "h": 6, "w": 6, "x": 0, "y": 24 },
+      "targets": [
+        {
+          "expr": "churn_model_drift_detected",
+          "legendFormat": "Drift"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [
+            { "options": { "0": { "text": "OK" }, "1": { "text": "DRIFT!" } }, "type": "value" }
+          ],
+          "thresholds": {
+            "steps": [
+              { "color": "green", "value": 0 },
+              { "color": "red", "value": 1 }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": 8,
+      "title": "Features Drifted",
+      "type": "stat",
+      "description": "Number of features whose distribution has shifted significantly from training data.",
+      "gridPos": { "h": 6, "w": 6, "x": 6, "y": 24 },
+      "targets": [
+        {
+          "expr": "churn_model_features_drifted_total",
+          "legendFormat": "Features"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "thresholds": {
+            "steps": [
+              { "color": "green", "value": 0 },
+              { "color": "yellow", "value": 1 },
+              { "color": "red", "value": 3 }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": 9,
+      "title": "Production Churn Rate",
+      "type": "stat",
+      "description": "Rolling churn rate from production predictions. Compare to reference (training) rate.",
+      "gridPos": { "h": 6, "w": 6, "x": 12, "y": 24 },
+      "targets": [
+        {
+          "expr": "churn_model_churn_rate * 100",
+          "legendFormat": "Churn %"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "thresholds": {
+            "steps": [
+              { "color": "green", "value": 0 },
+              { "color": "yellow", "value": 35 },
+              { "color": "red", "value": 50 }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": 10,
+      "title": "Production Samples (drift buffer)",
+      "type": "stat",
+      "description": "Predictions currently in the drift monitoring ring buffer (max 1000). Drift check requires ≥50.",
+      "gridPos": { "h": 6, "w": 6, "x": 18, "y": 24 },
+      "targets": [
+        {
+          "expr": "churn_model_production_samples_total",
+          "legendFormat": "Samples"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "thresholds": {
+            "steps": [
+              { "color": "red", "value": 0 },
+              { "color": "yellow", "value": 50 },
+              { "color": "green", "value": 100 }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": 11,
+      "title": "Feature Drift Scores (KS stat / PSI)",
+      "type": "timeseries",
+      "description": "Drift score per feature over time. KS statistic for numeric (threshold: p<0.05). PSI for categorical (threshold: >0.2).",
+      "gridPos": { "h": 8, "w": 24, "x": 0, "y": 30 },
+      "targets": [
+        {
+          "expr": "churn_model_feature_drift_score",
+          "legendFormat": "{{feature}}"
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "title": "Drift Checks Performed",
+      "type": "timeseries",
+      "description": "Cumulative count of automated drift checks (runs every 5 minutes when API is up).",
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 38 },
+      "targets": [
+        {
+          "expr": "churn_model_drift_checks_total",
+          "legendFormat": "Checks"
+        }
+      ]
+    }
+  ]
+}

@@ -8,6 +8,8 @@ services:
       - ./mlruns:/app/mlruns:rw
       - ./mlartifacts:/app/mlartifacts:rw
     environment:
+      - SERVICE=mlflow
+      - PORT=5000
       - MLFLOW_SERVER_ALLOWED_HOSTS=mlflow:*,step4_mlflow:*,localhost:*,127.0.0.1:*
       - MLFLOW_HTTP_REQUEST_ALLOW_ALL_HOSTS=true
     healthcheck:
@@ -16,7 +18,6 @@ services:
       timeout: 5s
       retries: 12
       start_period: 30s
-    command: mlflow server --host 0.0.0.0 --port 5000 --workers 1 --allowed-hosts "*"
 
   trainer:
     build: .
@@ -28,18 +29,13 @@ services:
       - ../data:/app/data:ro
       - models_data:/models
     environment:
+      - SERVICE=trainer
       - ML_FLOW_API=http://mlflow:5000
       - DATA_PATH=/app/data/Telco-Customer-Churn.csv
       - MODELS_PATH=/models
     depends_on:
       mlflow:
         condition: service_healthy
-    command: >
-      bash -c "
-        echo 'MLflow healthy — starting full training pipeline...' &&
-        mkdir -p /models &&
-        PYTHONPATH=/app/src python /app/src/main.py
-      "
 
   api:
     build: .
@@ -50,13 +46,13 @@ services:
       - ./src:/app/src
       - models_data:/models
     environment:
+      - SERVICE=api
       - ENVIRONMENT=development
       - ML_FLOW_API=http://mlflow:5000
       - MODELS_PATH=/models
     depends_on:
       mlflow:
         condition: service_healthy
-    command: uvicorn api.main:app --host 0.0.0.0 --port 8000 --reload
 
   prometheus:
     image: prom/prometheus:v2.53.0

@@ -16,12 +16,9 @@ build/
 
 # ML artefacts
 mlruns/
-mlartifacts/
-models/*.pkl
-models/*.pt
-models/*.joblib
 src/models/*.pkl
 src/models/*.pt
+# models/ is intentionally committed (pre-trained artifacts for Docker image)
 
 # Data
 data/output/

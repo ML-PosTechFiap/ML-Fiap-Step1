@@ -3,6 +3,9 @@ FROM python:3.12-slim
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 ENV PYTHONPATH=/app/src
+# Override at runtime: mlflow | trainer | api
+ENV SERVICE=api
+ENV PORT=8000
 
 WORKDIR /app
 
@@ -22,6 +25,13 @@ RUN uv pip install -r pyproject.toml --no-sources
 
 COPY src /app/src
 
-EXPOSE 8000
+# data/ must exist in the step4 directory before building the trainer image.
+# deploy.ps1 copies ../data/Telco-Customer-Churn.csv here automatically.
+COPY data /app/data
 
-CMD ["uvicorn", "api.main:app", "--host", "0.0.0.0", "--port", "8000"]
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
+EXPOSE 5000 8000
+
+ENTRYPOINT ["/entrypoint.sh"]

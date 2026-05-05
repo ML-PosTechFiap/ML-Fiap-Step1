@@ -105,7 +105,7 @@ class ShowWithPandas:
         df[numeric_cols] = df[numeric_cols].fillna(numeric_fill.fillna(0))
         return df
 
-    def encode_categorical(self, df: pd.DataFrame, method: str = "onehot") -> pd.DataFrame:
+    def encode_categorical(self, df: pd.DataFrame, method: str = "onehot", drop_first: bool = True) -> pd.DataFrame:
         df = df.copy()
         cat_cols = self.categorical_columns(df)
         if not cat_cols:
@@ -116,7 +116,7 @@ class ShowWithPandas:
                 le = LabelEncoder()
                 df[col] = le.fit_transform(df[col].astype(str))
         elif method == "onehot":
-            df = pd.get_dummies(df, columns=cat_cols, drop_first=True)
+            df = pd.get_dummies(df, columns=cat_cols, drop_first=drop_first)
         else:
             raise ValueError("method must be 'label' or 'onehot'")
         return df
@@ -164,9 +164,10 @@ class ShowWithPandas:
         handle_outliers_method: str = "winsorize",
         handle_nulls_method: str = "drop",
         encoding: str = "onehot",
+        drop_first: bool = True,
     ) -> pd.DataFrame:
         df = self.convert_types(df.copy())
-        df = self.encode_categorical(df, method=encoding)
+        df = self.encode_categorical(df, method=encoding, drop_first=drop_first)
         df = self.handle_nulls(df, strategy=handle_nulls_method)
         df = self.handle_outliers(df, method=handle_outliers_method)
         if normalize:

@@ -1,6 +1,10 @@
 #!/bin/bash
 set -e
 
+if [ $# -gt 0 ]; then
+  exec "$@"
+fi
+
 case "${SERVICE:-api}" in
   mlflow)
     exec mlflow server \

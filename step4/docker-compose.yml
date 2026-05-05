@@ -8,10 +8,11 @@ services:
       - ./mlruns:/app/mlruns:rw
       - ./mlartifacts:/app/mlartifacts:rw
     environment:
+      - SERVICE=mlflow
       - MLFLOW_SERVER_ALLOWED_HOSTS=mlflow:*,step4_mlflow:*,localhost:*,127.0.0.1:*
       - MLFLOW_HTTP_REQUEST_ALLOW_ALL_HOSTS=true
     healthcheck:
-      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:5000/health')"]
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:5000/')"]
       interval: 10s
       timeout: 5s
       retries: 12
@@ -28,6 +29,7 @@ services:
       - ../data:/app/data:ro
       - models_data:/models
     environment:
+      - SERVICE=trainer
       - ML_FLOW_API=http://mlflow:5000
       - DATA_PATH=/app/data/Telco-Customer-Churn.csv
       - MODELS_PATH=/models
@@ -50,6 +52,7 @@ services:
       - ./src:/app/src
       - models_data:/models
     environment:
+      - SERVICE=api
       - ENVIRONMENT=development
       - ML_FLOW_API=http://mlflow:5000
       - MODELS_PATH=/models

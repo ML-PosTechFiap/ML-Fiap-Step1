@@ -40,6 +40,7 @@ class PredictionService:
             handle_outliers_method="winsorize",
             handle_nulls_method="median",
             encoding="onehot",
+            drop_first=False,
         )
         df_final = df_ml.reindex(columns=EXPECTED_FEATURES, fill_value=0)
 

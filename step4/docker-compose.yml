@@ -54,6 +54,19 @@ services:
       mlflow:
         condition: service_healthy
 
+  mkdocs:
+    build: .
+    container_name: step4_mkdocs
+    ports:
+      - "8001:8001"
+    volumes:
+      - ./docs:/app/docs:ro
+      - ./mkdocs.yml:/app/mkdocs.yml:ro
+    environment:
+      - SERVICE=mkdocs
+      - PORT=8001
+    restart: unless-stopped
+
   prometheus:
     image: prom/prometheus:v2.53.0
     container_name: step4_prometheus

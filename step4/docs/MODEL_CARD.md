@@ -4,10 +4,10 @@
 
 | Field | Value |
 |-------|-------|
-| **Model name** | TelcoChurn Tuned RandomForest |
+| **Model name** | TelcoChurn Tuned GradientBoosting |
 | **Version** | 0.4.0 |
 | **Type** | Binary classification (churn / no-churn) |
-| **Algorithm** | RandomForest with time-budget hyperparameter search |
+| **Algorithm** | Gradient Boosting with time-budget hyperparameter search |
 | **Framework** | scikit-learn ≥ 1.8 + joblib serialisation |
 | **Compared against** | 11 sklearn baselines + PyTorch MLP |
 | **Date** | 2026-05 |

@@ -19,6 +19,11 @@ case "${SERVICE:-api}" in
       --port "${PORT:-8000}" \
       --reload
     ;;
+  mkdocs)
+    exec python -m mkdocs serve \
+      --dev-addr "0.0.0.0:${PORT:-8001}" \
+      --config-file /app/mkdocs.yml
+    ;;
   *)
     echo "Unknown SERVICE='${SERVICE}'. Valid values: mlflow | trainer | api" >&2
     exit 1

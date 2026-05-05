@@ -128,4 +128,4 @@ Padrões no comportamento contratual e de uso dos clientes (tipo de contrato, te
 
 ---
 
-*Documento criado como parte do Tech Challenge Fase 1 — ML-PosTech-FIAP (Step 4 — Final Delivery)*
+*Documento criado como parte do Tech Challenge Fase 1 — ML-PosTech-FIAP*

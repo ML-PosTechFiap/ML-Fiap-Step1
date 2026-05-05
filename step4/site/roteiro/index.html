@@ -1,0 +1,1208 @@
+
+<!doctype html>
+<html lang="pt" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Pipeline end-to-end de ML para previsão de churn em telecomunicações">
+      
+      
+        <meta name="author" content="ML-PosTech-FIAP">
+      
+      
+      
+        <link rel="prev" href="..">
+      
+      
+        <link rel="next" href="../ML_CANVAS/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Roteiro do Vídeo - Telco Churn Prediction — Tech Challenge Fase 1</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="cyan">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#guia-de-gravacao-do-video-metodo-star-5-minutos" class="md-skip">
+          Ir para o conteúdo
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Cabeçalho">
+    <a href=".." title="Telco Churn Prediction — Tech Challenge Fase 1" class="md-header__button md-logo" aria-label="Telco Churn Prediction — Tech Challenge Fase 1" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Telco Churn Prediction — Tech Challenge Fase 1
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Roteiro do Vídeo
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="cyan"  aria-label="Modo escuro"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Modo escuro" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="cyan"  aria-label="Modo claro"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Modo claro" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Buscar" placeholder="Buscar" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Pesquisar">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Limpar" aria-label="Limpar" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Inicializando a pesquisa
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Abas" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href=".." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Início
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="./" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Roteiro do Vídeo
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../ML_CANVAS/" class="md-tabs__link">
+          
+  
+  
+  Documentação Técnica
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navegação" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Telco Churn Prediction — Tech Challenge Fase 1" class="md-nav__button md-logo" aria-label="Telco Churn Prediction — Tech Challenge Fase 1" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Telco Churn Prediction — Tech Challenge Fase 1
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Início
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Roteiro do Vídeo
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Roteiro do Vídeo
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Índice">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Índice
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#distribuicao-do-tempo-sugerida" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ⏱️ Distribuição do Tempo Sugerida
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#roteiro-pratico-script" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🎬 Roteiro Prático (Script)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🎬 Roteiro Prático (Script)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-introducao-000-020" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Introdução (0:00 - 0:20)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-s-situation-situacao-020-120" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. S - Situation / Situação (0:20 - 1:20)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-t-task-tarefa-120-200" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. T - Task / Tarefa (1:20 - 2:00)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-a-action-acao-200-400" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. A - Action / Ação (2:00 - 4:00)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-r-result-resultado-400-500" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. R - Result / Resultado (4:00 - 5:00)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#como-o-codigo-funciona-decisoes-tecnicas-de-treinamento-e-deploy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🧠 Como o Código Funciona: Decisões Técnicas de Treinamento e Deploy
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🧠 Como o Código Funciona: Decisões Técnicas de Treinamento e Deploy">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-selecao-de-features-train_modelspy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Seleção de Features (train_models.py)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-treinamento-em-paralelo-11-modelos-mlp-train_modelspy-mlp_trainerpy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Treinamento em Paralelo: 11 Modelos + MLP (train_models.py + mlp_trainer.py)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-comparacao-e-identificacao-do-melhor-modelo-train_modelspy85-88" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Comparação e Identificação do Melhor Modelo (train_models.py:85-88)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-decisao-de-qual-modelo-tunar-mainpy-tuningpy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Decisão de Qual Modelo Tunar (main.py + tuning.py)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-estrategia-de-tuning-random-search-com-orcamento-de-tempo-tuningpy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Estratégia de Tuning: Random Search com Orçamento de Tempo (tuning.py)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-deploy-como-o-modelo-vai-para-producao-mainpy-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Deploy: Como o Modelo Vai para Produção (main.py + api/)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dicas-visuais-para-a-gravacao" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        💡 Dicas Visuais para a Gravação
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Documentação Técnica
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Documentação Técnica
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ML_CANVAS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ML Canvas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../MODEL_CARD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Model Card
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../DEPLOY_ARCHITECTURE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Arquitetura de Deploy
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../MONITORING_PLAN/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Plano de Monitoramento
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Índice">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Índice
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#distribuicao-do-tempo-sugerida" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ⏱️ Distribuição do Tempo Sugerida
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#roteiro-pratico-script" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🎬 Roteiro Prático (Script)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🎬 Roteiro Prático (Script)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-introducao-000-020" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Introdução (0:00 - 0:20)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-s-situation-situacao-020-120" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. S - Situation / Situação (0:20 - 1:20)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-t-task-tarefa-120-200" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. T - Task / Tarefa (1:20 - 2:00)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-a-action-acao-200-400" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. A - Action / Ação (2:00 - 4:00)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-r-result-resultado-400-500" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. R - Result / Resultado (4:00 - 5:00)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#como-o-codigo-funciona-decisoes-tecnicas-de-treinamento-e-deploy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🧠 Como o Código Funciona: Decisões Técnicas de Treinamento e Deploy
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🧠 Como o Código Funciona: Decisões Técnicas de Treinamento e Deploy">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-selecao-de-features-train_modelspy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Seleção de Features (train_models.py)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-treinamento-em-paralelo-11-modelos-mlp-train_modelspy-mlp_trainerpy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Treinamento em Paralelo: 11 Modelos + MLP (train_models.py + mlp_trainer.py)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-comparacao-e-identificacao-do-melhor-modelo-train_modelspy85-88" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Comparação e Identificação do Melhor Modelo (train_models.py:85-88)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-decisao-de-qual-modelo-tunar-mainpy-tuningpy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Decisão de Qual Modelo Tunar (main.py + tuning.py)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-estrategia-de-tuning-random-search-com-orcamento-de-tempo-tuningpy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Estratégia de Tuning: Random Search com Orçamento de Tempo (tuning.py)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-deploy-como-o-modelo-vai-para-producao-mainpy-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Deploy: Como o Modelo Vai para Produção (main.py + api/)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dicas-visuais-para-a-gravacao" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        💡 Dicas Visuais para a Gravação
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="guia-de-gravacao-do-video-metodo-star-5-minutos">Guia de Gravação do Vídeo - Método STAR (5 Minutos)<a class="headerlink" href="#guia-de-gravacao-do-video-metodo-star-5-minutos" title="Permanent link">&para;</a></h1>
+<p>Este é um roteiro estruturado para ajudar o seu grupo a gravar o vídeo de 5 minutos exigido pelo Tech Challenge, utilizando o <em>Método STAR</em> (Situation, Task, Action, Result). </p>
+<p>O tempo alvo é de <em>5 minutos</em> no total (aproximadamente 600 a 700 palavras se lido em um ritmo normal). Divida as falas entre os integrantes ou escolha um porta-voz.</p>
+<hr />
+<h2 id="distribuicao-do-tempo-sugerida">⏱️ Distribuição do Tempo Sugerida<a class="headerlink" href="#distribuicao-do-tempo-sugerida" title="Permanent link">&para;</a></h2>
+<ul>
+<li><em>Introdução:</em> ~20 segundos</li>
+<li><em>S - Situation (Situação):</em> ~50 segundos</li>
+<li><em>T - Task (Tarefa):</em> ~30 segundos</li>
+<li><em>A - Action (Ação):</em> ~2 min 20 seg (5 bullets — cortar monitoramento se apertar)</li>
+<li><em>R - Result (Resultado):</em> ~1 minuto</li>
+</ul>
+<hr />
+<h2 id="roteiro-pratico-script">🎬 Roteiro Prático (Script)<a class="headerlink" href="#roteiro-pratico-script" title="Permanent link">&para;</a></h2>
+<h3 id="1-introducao-000-020">1. Introdução (0:00 - 0:20)<a class="headerlink" href="#1-introducao-000-020" title="Permanent link">&para;</a></h3>
+<p><em>Objetivo:</em> Apresentar o grupo e o tema rapidamente.</p>
+<blockquote>
+<p>"Olá, nós somos o grupo [Nome/Número do Grupo] e hoje vamos apresentar o nosso Tech Challenge da Fase 1 — entrega final. Desenvolvemos um pipeline end-to-end de Machine Learning para a previsão de Churn (evasão de clientes) em uma operadora de telecomunicações."</p>
+</blockquote>
+<h3 id="2-s-situation-situacao-020-120">2. S - Situation / Situação (0:20 - 1:20)<a class="headerlink" href="#2-s-situation-situacao-020-120" title="Permanent link">&para;</a></h3>
+<p><em>Objetivo:</em> Qual o problema de negócio e o contexto do dataset?</p>
+<blockquote>
+<p>"O nosso contexto de negócio gira em torno de uma operadora de telecomunicações que está perdendo clientes em um ritmo muito acelerado. O 'Churn', que é essa taxa de cancelamento, gera uma enorme perda de receita, e a diretoria precisava de uma solução baseada em dados para agir preventivamente."</p>
+<p>"Para atacar esse problema, utilizamos o dataset 'Telco Customer Churn' da IBM. Ele contém informações cruciais sobre os clientes, como serviços contratados, dados demográficos, tempo de permanência (tenure) e os encargos mensais. A nossa variável alvo (target) era identificar quem cancelaria ou não o serviço no próximo mês."</p>
+</blockquote>
+<h3 id="3-t-task-tarefa-120-200">3. T - Task / Tarefa (1:20 - 2:00)<a class="headerlink" href="#3-t-task-tarefa-120-200" title="Permanent link">&para;</a></h3>
+<p><em>Objetivo:</em> Qual a tarefa do grupo e os objetivos técnicos?</p>
+<blockquote>
+<p>"Nossa tarefa central foi construir um projeto profissional de ponta a ponta: saindo da análise exploratória de dados até colocar um modelo em produção com monitoramento completo."</p>
+<p>"Os objetivos técnicos eram: desenvolver e comparar uma Rede Neural MLP em PyTorch com 11 baselines sklearn; implementar uma API de produção com FastAPI; e, principalmente, adicionar um stack completo de observabilidade — métricas com Prometheus, dashboards em Grafana e detecção de data drift em tempo real."</p>
+</blockquote>
+<h3 id="4-a-action-acao-200-400">4. A - Action / Ação (2:00 - 4:00)<a class="headerlink" href="#4-a-action-acao-200-400" title="Permanent link">&para;</a></h3>
+<p><em>Objetivo:</em> Quais decisões técnicas foram tomadas (arquitetura, features, modelo, métricas)?
+(Nota: Essa é a parte mais longa. Pode ser ideal mostrar a tela com a arquitetura ou o MLflow rodando durante essa fala).</p>
+<blockquote>
+<p>"Para solucionar o desafio, dividimos o projeto em 4 grandes etapas:"</p>
+<ul>
+<li><em>Preparação e EDA:</em> "Fizemos uma análise exploratória completa, tratamos valores nulos e aplicamos técnicas de Feature Engineering como One-Hot Encoding e tratamento de outliers com Winsorize. Avaliamos a viabilidade dos dados e definimos nossas métricas de sucesso: ROC-AUC, Recall (para focar nos falsos negativos) e a métrica de negócio baseada no custo do churn."</li>
+<li><em>Modelagem e Baselines:</em> "Treinamos pipelines robustos em Scikit-Learn com 11 modelos diferentes, incluindo Dummy Classifier e Logistic Regression como baselines."</li>
+<li><em>Rede Neural (PyTorch):</em> "Construímos nossa arquitetura principal: uma MLP (Multi-Layer Perceptron) com PyTorch, utilizando camadas ocultas, função de perda BCEWithLogitsLoss, Dropout para evitar overfitting e Early Stopping no loop de treinamento."</li>
+<li><em>Engenharia e API (Arquitetura):</em> "Refatoramos todo o código adotando modularização (pasta src/). Utilizamos o pyproject.toml para gerenciar dependências, aplicamos linting com ruff e implementamos testes automatizados (unitários, de esquema e API) com pytest. Todo o rastreamento foi feito com o MLflow. Servimos o modelo em uma API REST com FastAPI e Pydantic, rodando tudo em containers via Docker Compose, com deploy no Railway."</li>
+<li><em>Monitoramento em Produção (Step 4):</em> "Instrumentamos a API com Prometheus — coletando latência, taxa de erro, volume de predições e churn rate em tempo real. Criamos dashboards no Grafana conectados a essas métricas. Implementamos detecção de data drift: a API compara as distribuições dos dados recebidos em produção com as estatísticas do treino, expondo um endpoint GET /drift que alerta quando a distribuição deriva. O model hot-reload permite atualizar o modelo sem derrubar o serviço."</li>
+</ul>
+</blockquote>
+<h3 id="5-r-result-resultado-400-500">5. R - Result / Resultado (4:00 - 5:00)<a class="headerlink" href="#5-r-result-resultado-400-500" title="Permanent link">&para;</a></h3>
+<p><em>Objetivo:</em> Quais os resultados obtidos e as lições aprendidas?</p>
+<blockquote>
+<p>"Como resultado, treinamos e comparamos 12 modelos — 11 sklearn mais a MLP PyTorch — usando 5 métricas simultâneas: ROC-AUC, PR-AUC, Recall, F1 e custo de negócio. O <strong>Gradient Boosting</strong> liderou a comparação com <strong>ROC-AUC de 0.843</strong>, F1 de 0.588 e accuracy de 0.803. Ele foi então tunado com random search de orçamento de tempo de 5 minutos, alcançando accuracy final de <strong>0.810</strong>."</p>
+<p>"Vale destacar uma descoberta importante: a MLP PyTorch teve o ROC-AUC de 0.828 — competitivo — mas o menor recall entre os modelos úteis (0.404), confirmando que métricas únicas enganam. A análise de custo de negócio mostrou que, no threshold ótimo de ~0.14, a Regressão Logística minimizou a perda total (R$48.880), provando que o melhor modelo estatístico não é sempre o melhor para o negócio."</p>
+<p>"Como entrega final, temos além do modelo: a API em produção no Railway com Prometheus, Grafana e drift detection ativo. O Model Card documenta limitações, vieses e limiares de retreinamento. A maior lição foi que MLOps completo — rastreamento, monitoramento, observabilidade e deploy reprodutível — é tão crítico quanto a acurácia do modelo."</p>
+</blockquote>
+<hr />
+<h2 id="como-o-codigo-funciona-decisoes-tecnicas-de-treinamento-e-deploy">🧠 Como o Código Funciona: Decisões Técnicas de Treinamento e Deploy<a class="headerlink" href="#como-o-codigo-funciona-decisoes-tecnicas-de-treinamento-e-deploy" title="Permanent link">&para;</a></h2>
+<p>Esta seção descreve, em detalhe, as decisões que o pipeline toma automaticamente — útil tanto para a gravação quanto para quem quiser entender o projeto a fundo.</p>
+<hr />
+<h3 id="1-selecao-de-features-train_modelspy">1. Seleção de Features (<code>train_models.py</code>)<a class="headerlink" href="#1-selecao-de-features-train_modelspy" title="Permanent link">&para;</a></h3>
+<p>Antes de qualquer treinamento, o pipeline aplica <code>SelectKBest</code> com a função <code>f_classif</code> (ANOVA F-score) para selecionar as <strong>25 features mais relevantes</strong> do dataset pré-processado (que possui 34 colunas após o one-hot encoding). O número <code>k=25</code> é fixo, mas limitado ao total de colunas disponíveis:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">k</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="mi">25</span><span class="p">,</span> <span class="n">X_train</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="n">X_train_sel</span><span class="p">,</span> <span class="n">X_test_sel</span><span class="p">,</span> <span class="n">selector</span> <span class="o">=</span> <span class="n">trainer</span><span class="o">.</span><span class="n">feature_selection</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="n">k</span><span class="p">)</span>
+</code></pre></div>
+<p>Essa seleção é aplicada de forma consistente em treino e teste para evitar data leakage.</p>
+<hr />
+<h3 id="2-treinamento-em-paralelo-11-modelos-mlp-train_modelspy-mlp_trainerpy">2. Treinamento em Paralelo: 11 Modelos + MLP (<code>train_models.py</code> + <code>mlp_trainer.py</code>)<a class="headerlink" href="#2-treinamento-em-paralelo-11-modelos-mlp-train_modelspy-mlp_trainerpy" title="Permanent link">&para;</a></h3>
+<p>O pipeline treina <strong>11 modelos Scikit-Learn</strong> com configurações padrão (sem tuning) em sequência. Para cada modelo:
+- Executa validação cruzada com 5 folds estratificados (<code>StratifiedKFold</code>) e métrica <code>roc_auc</code>.
+- Treina no conjunto completo de treino e avalia no conjunto de teste.
+- Registra automaticamente todos os parâmetros e métricas no <strong>MLflow</strong> em runs separadas e aninhadas.</p>
+<p>Após os modelos sklearn, a <strong>MLP PyTorch</strong> é treinada com:
+- Arquitetura fixa: <code>[128, 64, 32]</code> neurônios, dropout de 30%.
+- Otimizador Adam com <code>lr=0.001</code>, batch size 64, até 200 épocas.
+- <strong>Early stopping</strong> com paciência de 15 épocas — o treinamento para automaticamente ao detectar estagnação na <code>val_loss</code>.</p>
+<hr />
+<h3 id="3-comparacao-e-identificacao-do-melhor-modelo-train_modelspy85-88">3. Comparação e Identificação do Melhor Modelo (<code>train_models.py:85-88</code>)<a class="headerlink" href="#3-comparacao-e-identificacao-do-melhor-modelo-train_modelspy85-88" title="Permanent link">&para;</a></h3>
+<p>Ao final do loop de treinamento, o código identifica o modelo com maior <strong>test accuracy</strong>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="k">if</span> <span class="n">acc</span> <span class="o">&gt;</span> <span class="n">best_score</span><span class="p">:</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>    <span class="n">best_score</span><span class="p">,</span> <span class="n">best_model</span><span class="p">,</span> <span class="n">best_name</span> <span class="o">=</span> <span class="n">acc</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">name</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Best model: </span><span class="si">{</span><span class="n">best_name</span><span class="si">}</span><span class="s2"> (accuracy=</span><span class="si">{</span><span class="n">best_score</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+</code></pre></div>
+<p>Na última execução confirmada (run MLflow <code>be59b925</code>), o <strong>Gradient Boosting</strong> venceu com os seguintes resultados no conjunto de teste:</p>
+<table>
+<thead>
+<tr>
+<th>Métrica</th>
+<th>Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ROC-AUC</td>
+<td><strong>0.8432</strong></td>
+</tr>
+<tr>
+<td>PR-AUC</td>
+<td>0.6619</td>
+</tr>
+<tr>
+<td>F1 (churn)</td>
+<td>0.5875</td>
+</tr>
+<tr>
+<td>Recall (churn)</td>
+<td>0.5294</td>
+</tr>
+<tr>
+<td>Precision (churn)</td>
+<td>0.6600</td>
+</tr>
+<tr>
+<td>Accuracy</td>
+<td><strong>0.8027</strong></td>
+</tr>
+<tr>
+<td>TP / FP / FN / TN</td>
+<td>198 / 102 / 176 / 933</td>
+</tr>
+</tbody>
+</table>
+<p>Para referência, a <strong>MLP PyTorch</strong> ficou com AUC=0.828 mas recall=0.404 — o menor entre os modelos não-triviais, reforçando que AUC alto não garante recall adequado para o problema de churn.</p>
+<p>A comparação completa entre todos os modelos (incluindo a MLP) usa 5 métricas simultâneas: <code>roc_auc</code>, <code>pr_auc</code>, <code>recall</code>, <code>f1</code> e <strong>custo de negócio</strong> (calculado com base nos custos diferenciados de Falsos Positivos e Falsos Negativos). No <strong>threshold ótimo de negócio (~0.14)</strong>, a <strong>Regressão Logística</strong> minimizou o custo total com R$48.880 de perda — abaixo do Gradient Boosting (R$50.480) — mostrando que o vencedor estatístico pode não ser o ótimo de negócio.</p>
+<hr />
+<h3 id="4-decisao-de-qual-modelo-tunar-mainpy-tuningpy">4. Decisão de Qual Modelo Tunar (<code>main.py</code> + <code>tuning.py</code>)<a class="headerlink" href="#4-decisao-de-qual-modelo-tunar-mainpy-tuningpy" title="Permanent link">&para;</a></h3>
+<p>O pipeline faz tuning no <strong>modelo vencedor da comparação</strong> — no nosso caso, o Gradient Boosting. A chamada em <code>main.py</code> passa explicitamente o melhor modelo sklearn:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="n">tuned_model</span><span class="p">,</span> <span class="n">tuning_metrics</span> <span class="o">=</span> <span class="n">time_budget_search</span><span class="p">(</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>    <span class="n">best_sklearn_model</span><span class="p">,</span> <span class="n">X_train_sel</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">X_test_sel</span><span class="p">,</span> <span class="n">y_test</span><span class="p">,</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>    <span class="n">time_limit_minutes</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>    <span class="n">acc_target</span><span class="o">=</span><span class="mf">0.90</span><span class="p">,</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>    <span class="n">model_name</span><span class="o">=</span><span class="n">best_sklearn_name</span><span class="p">,</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="p">)</span>
+</code></pre></div>
+<p>Dentro de <code>tuning.py</code>, a função <code>time_budget_search</code> usa o tipo do modelo recebido para selecionar automaticamente o espaço de hiperparâmetros correto via <code>_PARAM_DISTRIBUTIONS</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="n">model_class_name</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="n">model</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="n">param_distributions</span> <span class="o">=</span> <span class="n">_PARAM_DISTRIBUTIONS</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">model_class_name</span><span class="p">)</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="c1"># Se não houver distribuição definida, faz fallback para RandomForest</span>
+</code></pre></div>
+<p>Para o <strong>GradientBoostingClassifier</strong>, o espaço inclui <code>n_estimators</code>, <code>max_depth</code>, <code>learning_rate</code>, <code>subsample</code> e <code>min_samples_split</code>. O pipeline constrói e avalia dinamicamente cada combinação com <code>clone(model)</code>, garantindo reprodutibilidade.</p>
+<hr />
+<h3 id="5-estrategia-de-tuning-random-search-com-orcamento-de-tempo-tuningpy">5. Estratégia de Tuning: Random Search com Orçamento de Tempo (<code>tuning.py</code>)<a class="headerlink" href="#5-estrategia-de-tuning-random-search-com-orcamento-de-tempo-tuningpy" title="Permanent link">&para;</a></h3>
+<p>Em vez de GridSearchCV (que explora um grid fixo), o pipeline usa <code>ParameterSampler</code> com <strong>busca aleatória com orçamento de tempo</strong>:</p>
+<ul>
+<li>Define um prazo de <strong>5 minutos</strong> (configurável).</li>
+<li>Amostra configurações aleatórias de um espaço contínuo (ex: <code>n_estimators</code> entre 50 e 300).</li>
+<li>Para cada candidato: executa cross-validation com 5 folds, treina no conjunto completo e mede accuracy no teste.</li>
+<li>Salva apenas o melhor encontrado até o momento.</li>
+<li>Interrompe se atingir o tempo limite <strong>ou</strong> se o <code>acc_target</code> (0.90) for alcançado.</li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="k">if</span> <span class="n">test_acc</span> <span class="o">&gt;=</span> <span class="n">acc_target</span><span class="p">:</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Target accuracy </span><span class="si">{</span><span class="n">acc_target</span><span class="si">}</span><span class="s2"> reached — stopping early.&quot;</span><span class="p">)</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>    <span class="k">break</span>
+</code></pre></div>
+<p>Na execução do Step 4, o algoritmo rodou durante <strong>5 minutos</strong> tunando o Gradient Boosting (baseline <code>accuracy=0.8027</code>) e atingiu <code>accuracy≈0.810</code> — melhora consistente com o ganho esperado do espaço de busca do GB. O espaço foi bem explorado e o ganho marginal tende a estabilizar após as primeiras dezenas de iterações.</p>
+<hr />
+<h3 id="6-deploy-como-o-modelo-vai-para-producao-mainpy-api">6. Deploy: Como o Modelo Vai para Produção (<code>main.py</code> + <code>api/</code>)<a class="headerlink" href="#6-deploy-como-o-modelo-vai-para-producao-mainpy-api" title="Permanent link">&para;</a></h3>
+<p>Após o tuning, o pipeline executa três ações de persistência:</p>
+<ol>
+<li><strong>Salva o artefato local</strong> em <code>/models/tuned_model.pkl</code> via <code>joblib</code>.</li>
+<li><strong>Registra no MLflow Model Registry</strong> com nome dinâmico baseado no vencedor (ex: <code>TelcoChurn_Tuned_GradientBoosting_Model</code>), criando a versão 1.</li>
+<li><strong>Salva estatísticas de referência</strong> (<code>reference_stats.json</code>) com as distribuições do dado de treino — usadas pela API para detecção de <strong>data drift</strong> em produção.</li>
+</ol>
+<p>A API (<code>api/main.py</code>) carrega o modelo do <code>.pkl</code> na inicialização e expõe dois endpoints principais:
+- <code>POST /predict</code> — recebe os dados do cliente em JSON, valida com <strong>Pydantic</strong>, aplica a mesma feature engineering do treino e retorna a probabilidade de churn.
+- <code>GET /drift</code> — compara a distribuição dos dados recebidos desde o início do serviço com as estatísticas de referência, alertando para desvios significativos.</p>
+<hr />
+<h2 id="dicas-visuais-para-a-gravacao">💡 Dicas Visuais para a Gravação<a class="headerlink" href="#dicas-visuais-para-a-gravacao" title="Permanent link">&para;</a></h2>
+<p>Para não ficar apenas "falando para a câmera" (talking head), enriqueça o vídeo intercalando sua fala com as seguintes imagens (Screen Recording):
+1. <em>[0:40] Dataset/EDA:</em> Mostre rapidamente um gráfico da EDA gerado pelo código.
+2. <em>[2:30] MLflow:</em> Mostre a interface do MLflow com as dezenas de runs registradas e gráficos de perda.
+3. <em>[3:20] Código PyTorch/API:</em> Mostre um trecho limpo do modelo PyTorch e o arquivo da API FastAPI.
+4. <em>[4:10] Avaliação:</em> Mostre a tabela de comparação de modelos ou os gráficos de Curva ROC/PR e Análise de Custo Trade-off.
+5. <em>[4:30] Swagger FastAPI:</em> Mostre o /docs da API em funcionamento, realizando um .predict().</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Voltar ao topo
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.expand", "navigation.top", "search.highlight", "search.suggest", "content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copiado para \u00e1rea de transfer\u00eancia", "clipboard.copy": "Copiar para \u00e1rea de transfer\u00eancia", "search.result.more.one": "Mais 1 nesta p\u00e1gina", "search.result.more.other": "Mais # nesta p\u00e1gina", "search.result.none": "Nenhum resultado encontrado", "search.result.one": "1 resultado encontrado", "search.result.other": "# resultados encontrados", "search.result.placeholder": "Digite para iniciar a busca", "search.result.term.missing": "Ausente", "select.version": "Selecione a vers\u00e3o"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

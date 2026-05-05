@@ -25,6 +25,10 @@ RUN uv pip install -r pyproject.toml --no-sources
 
 COPY src /app/src
 
+# Pre-trained model baked into the image so the API starts without needing a
+# separate trainer run or shared volume (Railway volumes are per-service).
+COPY models /app/models
+
 # data/ must exist in the step4 directory before building the trainer image.
 # deploy.ps1 copies ../data/Telco-Customer-Churn.csv here automatically.
 COPY data /app/data

@@ -20,7 +20,8 @@ case "${SERVICE:-api}" in
   api)
     exec uvicorn api.main:app \
       --host 0.0.0.0 \
-      --port "${PORT:-8000}"
+      --port "${PORT:-8000}" \
+      --reload
     ;;
   *)
     echo "Unknown SERVICE='${SERVICE}'. Valid values: mlflow | trainer | api" >&2
